@@ -69,6 +69,9 @@
         display: flex;
         flex-flow: column wrap;
     }
+    #shopped{
+        text-decoration: line-through;
+    }
 
 
 </style>
@@ -87,29 +90,55 @@
     <div id="item-table">
         {%  for row in all_items %}
         <div class="list-item">
-            <input type="checkbox" id="{{forloop.counter}}" onclick="clicked(this);" value=""> {{row.name}} {{forloop.counter}} 
+            <input type="checkbox" name="item-checked" id="{{forloop.counter}}" onclick="handleClick(this);" value="{{row.name}}"> {{row.name}} {{forloop.counter}} 
+        </div>
+        {% endfor %}
+    </div>
+    <div>
+        <h3>Gekaufte Items</h3>
+    </div>
+    <div id="item-table">
+        {%  for row in shopped_items %}
+        <div class="list-item">
+            <input type="checkbox" id="shopped" name="item-checked" id="{{forloop.counter}}" onclick="handleClick(this);" value="{{row.name}}"> {{row.name}} {{forloop.counter}} 
         </div>
         {% endfor %}
     </div>
 
+
    
     <script>
-
+        let checked_items = [];
         async function addItem() {
-        let itemName = document.getElementById("item-input").value;
-        let formData = new FormData();
-        let token = "{{csrf_token}}";
-        formData.append("itemName", itemName);
-        formData.append("csrfmiddlewaretoken", token);
-        await fetch("/mylist/", {
-            method: "POST",
-            body: formData,
-        });
-        window.location.reload();
+            let itemName = document.getElementById("item-input").value;
+            let formData = new FormData();
+            let token = "{{csrf_token}}";
+            formData.append("itemName", itemName);
+            formData.append("csrfmiddlewaretoken", token);
+            await fetch("/mylist/", {
+                method: "POST",
+                body: formData,
+            });
+            window.location.reload();
         };
-        function clicked(cb){
-            
-        }
+        async function handleClick(cb) {
+            /*let checkedItem = cb.checked;*/
+            let checkedItemValue = document.getElementById(cb.id).value;
+            /*console.log(checkedItemValue);*/
+            let checked = new FormData();
+            let token = "{{csrf_token}}";
+            checked.append("ItemName", checkedItemValue);
+            checked.append("csrfmiddlewaretoken", token);
+            checked.append("done", cb.checked)
+            await fetch("/updatedMyList/",{
+                method: "POST",
+                body: checked,
+            });
+            window.location.reload();
+
+            };
+
+
     </script>
 </body>
 </html>
