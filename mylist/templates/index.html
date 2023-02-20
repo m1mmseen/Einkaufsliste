@@ -69,9 +69,10 @@
         display: flex;
         flex-flow: column wrap;
     }
-    #shopped{
+    .shopped{
         text-decoration: line-through;
     }
+
 
 
 </style>
@@ -87,7 +88,7 @@
         </div>
         <button id="btn" onclick="addItem()">+</button>
     </header>
-    <div id="item-table">
+    <div id="open-item-table">
         {%  for row in all_items %}
         <div class="list-item">
             <input type="checkbox" name="item-checked" id="{{forloop.counter}}" onclick="handleClick(this);" value="{{row.name}}"> {{row.name}} {{forloop.counter}} 
@@ -97,10 +98,10 @@
     <div>
         <h3>Gekaufte Items</h3>
     </div>
-    <div id="item-table">
+    <div id="shopped-item-table">
         {%  for row in shopped_items %}
         <div class="list-item">
-            <input type="checkbox" id="shopped" name="item-checked" id="{{forloop.counter}}" onclick="handleClick(this);" value="{{row.name}}"> {{row.name}} {{forloop.counter}} 
+            <p class="shopped" > {{row.name}} </p>
         </div>
         {% endfor %}
     </div>
