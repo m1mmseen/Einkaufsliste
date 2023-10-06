@@ -1,6 +1,6 @@
 # Einkaufsliste
 
- <img alt="Static Badge" src="https://img.shields.io/badge/Project level-Intermediate-purple">
+ <img alt="Static Badge" src="https://img.shields.io/badge/Project level-Simple-green">
 
 ## Table of Content
 - [About the project](README.md#about-the-project)
